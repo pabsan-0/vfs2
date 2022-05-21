@@ -7,9 +7,11 @@ from vfs.losses import *
 
 pandarallel.initialize()
 df = pd.read_csv('data.csv')
-
 mifun = mi_helper(df)
 
+
+
+"""
 mim  = ForwardSelector(df, df.columns[:-1], ['A15'],  k=10, loss=mim, mi_fun=mifun)
 disr  = ForwardSelector(df, df.columns[:-1], ['A15'], k=10, loss=disr, mi_fun=mifun)
 jmi   = ForwardSelector(df, df.columns[:-1], ['A15'], k=10, loss=jmi, mi_fun=mifun)
@@ -24,3 +26,4 @@ print('jmi'); print(jmi)
 print('jmim'); print(jmim)
 print('mrmr'); print(mrmr)
 print('njmim'); print(njmim)
+"""

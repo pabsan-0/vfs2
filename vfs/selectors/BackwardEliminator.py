@@ -3,7 +3,7 @@ import pandas as pd
 from ..mi.mi_base import mi_helper
 
 
-class ForwardSelector:
+class BackwardEliminator:
 
     def __init__(self, df, features, targets, k=3, loss=None, mi_fun=None, memclear=True):
         # Inmutable parameters throughout the whole feature selection
@@ -17,15 +17,15 @@ class ForwardSelector:
 
         # Process-specific attributes, mutable
         self.candidates: DataFrame = self.list_to_frame(self.features)
-        self.selected: list[str] = []
+        self.discarded: list[str] = []
         self.scores: list[float] = []
 
         # Do the shit
         self.feature_selection_run()
 
         # Build summary with results
-        data = np.array([self.selected, self.scores]).T
-        self.summary = pd.DataFrame(data, columns=['Selected', 'Score'])
+        data = np.array([self.discarded, self.scores]).T
+        self.summary = pd.DataFrame(data, columns=['Discarded', 'Score'])
         self.__repr__()
 
         # Delete prediscretized data within mi func
@@ -33,19 +33,22 @@ class ForwardSelector:
             del self.loss.mi
             del self.candidates
 
+
     def __repr__(self):
         """ Instance representation with results and method information. """
         return self.summary.__repr__()
 
+
     def feature_selection_run(self):
-        # Select as many features as desired
-        while len(self.selected) < self.k:
+        # Discard until we have the right number of features.
+        while len(self.candidates) > self.k:
             # Inspect all features and choose the best one
-            feat, score = self.loss.choose_best(self.candidates, self.selected, self.targets)
+            feat, score = self.loss.choose_best(self.candidates, self.selected, self.targets,
+                best_is_max=False)
 
             # Arrange stacks
             self.candidates.drop(feat, inplace=True)
-            self.selected.append(feat)
+            self.discarded.append(feat)
             self.scores.append(score)
 
 
