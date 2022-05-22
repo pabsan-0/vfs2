@@ -1,8 +1,9 @@
+from .. import Loss
 
-
-
-class mrmr:
+class mrmr(Loss):
     """ Maximal Relevance Minimal Redundance scoring, Peng (2005). """
+    name = 'MRMR loss'
+
     def __init__(self, mi=None):
         self.mi = mi
 

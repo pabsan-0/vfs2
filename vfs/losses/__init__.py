@@ -1,3 +1,5 @@
+from .Loss import Loss
+
 from .literature.mim import mim
 from .literature.disr import disr
 from .literature.jmi import jmi

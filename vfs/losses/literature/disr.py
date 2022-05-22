@@ -1,8 +1,9 @@
+from .. import Loss
 
-
-
-class disr:
+class disr(Loss):
     """ Double Input Symmetrical Relevance, Meyer (2006). """
+    name = 'DISR loss'
+
     def __init__(self, mi=None):
         self.mi = mi
 

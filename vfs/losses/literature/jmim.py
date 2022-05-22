@@ -1,7 +1,9 @@
+from .. import Loss
 
-
-class jmim:
+class jmim(Loss):
     """ Joint Mutual Information Maximization, Bennasar (2015)."""
+    name = 'JMIM loss'
+
     def __init__(self, mi=None):
         self.mi = mi
 

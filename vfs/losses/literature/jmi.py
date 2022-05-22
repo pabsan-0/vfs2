@@ -1,6 +1,9 @@
+from .. import Loss
 
-class jmi:
+class jmi(Loss):
     """ (Pairwise) Joint Mutual Information scoring, Yang (1999). """
+    name = 'JMI loss'
+
     def __init__(self, mi=None):
         self.mi = mi
 

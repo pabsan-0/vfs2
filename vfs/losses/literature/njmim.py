@@ -1,11 +1,14 @@
+from .. import Loss
 
+class njmim(Loss):
+    """ Joint Mutual Information Maximization, Bennasar (2015). """
+    name = 'NJMIM loss'
 
-class njmim:
-    """ Joint Mutual Information Maximization, Bennasar (2015)."""
     def __init__(self, mi=None):
         self.mi = mi
 
     def choose_best(self, candidates, selected, targets, best_is_max=True):
+        """ Choose the best feature from 'candidates' based on this score. """
         # Define the func that will be .applied and pack its arguments
         scoring = self.jmim_score if selected else self.bivariate_mi
         argtuple = (selected, targets, self.mi)

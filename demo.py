@@ -19,13 +19,13 @@ losses = {
     'njmim': njmim,
 }
 
-'''
+
 results = {}
 for name, loss in losses.items():
     results[name + 'fwd'] =  ForwardSelector(df, df.columns[:-1], ['A15'],  k=3, loss=loss, mi_fun=mifun)
     results[name + 'bwd'] =  BackwardEliminator(df, df.columns[:-1], ['A15'],  k=3, loss=loss, mi_fun=mifun)
     print(results[name + 'fwd'])
     print(results[name + 'bwd'])
-'''
+
 
 es = ExhaustiveSearcher(df,  df.columns[:-1], ['A15'], k=1, mi_fun=mifun)

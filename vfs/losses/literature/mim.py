@@ -1,8 +1,9 @@
+from ..Loss import Loss
 
-
-
-class mim:
+class mim(Loss):
     """ Mutual Information Maximization, Battiti (1994), forward selection. """
+    name = 'MIM loss'
+
     def __init__(self, mi=None):
         self.mi = mi
 
