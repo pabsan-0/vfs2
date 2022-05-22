@@ -7,9 +7,9 @@ class BackwardEliminator:
 
     def __init__(self, df, features, targets, k=3, loss=None, mi_fun=None, memclear=True):
         # Inmutable parameters throughout the whole feature selection
-        self.features: list[str] = features
-        self.targets: list[str] = targets
-        self.k: int = min(k, len(self.features)) if k else len(self.features)
+        self.features: list[str] = list(features)
+        self.targets: list[str] = list(targets)
+        self.k: int = min(k, len(self.features)) if k else 1
 
         # Heavy inmutable, should be cleaned after computations
         # Feeding INSTANCE is allowed to avoid rediscretization on repeated runs
@@ -42,8 +42,11 @@ class BackwardEliminator:
     def feature_selection_run(self):
         # Discard until we have the right number of features.
         while len(self.candidates) > self.k:
+            selected = list(self.features.copy())
+            [selected.remove(ii) for ii in self.discarded]
+
             # Inspect all features and choose the best one
-            feat, score = self.loss.choose_best(self.candidates, self.selected, self.targets,
+            feat, score = self.loss.choose_best(self.candidates, selected, self.targets,
                 best_is_max=False)
 
             # Arrange stacks

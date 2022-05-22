@@ -33,9 +33,11 @@ class ForwardSelector:
             del self.loss.mi
             del self.candidates
 
+
     def __repr__(self):
         """ Instance representation with results and method information. """
         return self.summary.__repr__()
+
 
     def feature_selection_run(self):
         # Select as many features as desired

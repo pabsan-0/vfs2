@@ -9,8 +9,13 @@ class mrmr:
     def choose_best(self, candidates, selected, targets, best_is_max=True):
         argtuple = (selected, targets, self.mi)
         if selected:
-            ixy = candidates.feat.parallel_apply(self.bivariate_ixy, args=argtuple)
-            ixw = candidates.feat.parallel_apply(self.bivar_sum_ixw, args=argtuple)
+            try:
+                ixy = candidates.feat.parallel_apply(self.bivariate_ixy, args=argtuple)
+                ixw = candidates.feat.parallel_apply(self.bivar_sum_ixw, args=argtuple)
+            except ValueError as e:
+                print(e)
+                print("@@ Forbidden: tried using MRMR for backward elimination.")
+
             scores = ixy - (ixw / len(selected))
         else:
             scores = candidates.feat.parallel_apply(self.bivariate_ixy, args=argtuple)
