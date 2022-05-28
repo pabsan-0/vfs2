@@ -2,7 +2,7 @@ import pandas as pd
 
 from context import vfs
 from vfs.mi.mi_frame import mi_frame
-from vfs.selectors import BackwardEliminator, ForwardSelector, ExhaustiveSearcher
+from vfs.selectors import backward_eliminator, forward_selector, BackwardEliminator, ForwardSelector, ExhaustiveSearcher
 from vfs.losses import *
 
 
@@ -22,11 +22,12 @@ losses = {
 
 results = {}
 for name, loss in losses.items():
-    results[name + 'fwd'] =  ForwardSelector(df, df.columns[:-1], ['A15'],  k=3, loss=loss, mi_fun=mifun)
-    results[name + 'bwd'] =  BackwardEliminator(df, df.columns[:-1], ['A15'],  k=10, loss=loss, mi_fun=mifun)
+    y =  ForwardSelector(df, df.columns[:-1], ['A15'],  k=3, loss=loss, mi_fun=mifun)
+    z =  forward_selector(df, df.columns[:-1], ['A15'],  k=10, loss=loss, mi_fun=mifun)
     print(name)
-    print(results[name + 'fwd'])
-    print(results[name + 'bwd'])
+    #print(results[name + 'fwd'])
+    print(y)
+    print(z)
 
 
 es = ExhaustiveSearcher(df,  df.columns[:-1], ['A15'], k=1, mi_fun=mifun)

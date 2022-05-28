@@ -3,6 +3,45 @@ import pandas as pd
 from ..mi.mi_frame import mi_frame
 
 
+def backward_eliminator(df, features, targets, k=3, loss=None, mi_fun=None):
+
+    # Inmutable parameters throughout the whole feature selection
+    features: list[str] = list(features)
+    targets: list[str] = list(targets)
+    kk: int = min(k, len(features)) if k else 1
+
+    # Process-specific attributes, mutable
+    candidates = pd.DataFrame({'feat': features}).set_index(['feat'], drop=False)
+    discarded: list[str] = []
+    scores: list[float] = []
+
+    while len(candidates) > kk:
+        selected = list(features.copy())
+        [selected.remove(ii) for ii in discarded]
+
+        # Pack arguments and loss to send to multiprocessing
+        _args = (selected, targets, mi_fun)
+        _loss = loss.choose(first_iter=not selected)
+
+        # Multiprocessing and choose the best feature this iter
+        iter_scores = candidates.feat.parallel_apply(_loss, args=_args)
+        feat  = iter_scores.idxmin()
+        score = iter_scores[feat]
+
+        # Manage selected/discarded/etc
+        candidates.drop(feat, inplace=True)
+        discarded.append(feat)
+        scores.append(score)
+
+    # Build summary dataframe with the ranking
+    data = np.array([discarded, scores]).T
+    summary = pd.DataFrame(data, columns=['Discarded', loss.name])
+
+    assert (selected + discarded).sort() == features.sort()
+    return selected, discarded, summary
+
+
+
 class BackwardEliminator:
 
     def __init__(self, df, features, targets, k=3, loss=None, mi_fun=None, memclear=True):
