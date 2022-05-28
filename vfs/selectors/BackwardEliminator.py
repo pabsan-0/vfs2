@@ -9,6 +9,11 @@ class BackwardEliminator:
     def __init__(self, df, features, targets, k=3, loss=None, mi_fun=None, memclear=True):
         pandarallel.initialize(verbose=0)
 
+        if 'MRMR' in loss.name:
+            print("MRMR not allowed backwards")
+            self.summary = None
+            return
+
         # Inmutable parameters throughout the whole feature selection
         self.features: list[str] = list(features)
         self.targets: list[str] = list(targets)
@@ -16,7 +21,8 @@ class BackwardEliminator:
 
         # Heavy inmutable, should be cleaned after computations
         # Feeding INSTANCE is allowed to avoid rediscretization on repeated runs
-        self.loss = loss(mi_fun if mi_fun else mi_frame(df))
+        self.loss = loss;
+        self.mi = mi_fun
 
         # Process-specific attributes, mutable
         self.candidates: DataFrame = self.list_to_frame(self.features)
@@ -33,7 +39,7 @@ class BackwardEliminator:
 
         # Delete prediscretized data within mi func
         if memclear == True:
-            del self.loss.mi
+            del self.mi
             del self.candidates
 
 
@@ -49,8 +55,12 @@ class BackwardEliminator:
             [selected.remove(ii) for ii in self.discarded]
 
             # Inspect all features and choose the best one
-            feat, score = self.loss.choose_best(self.candidates, selected, self.targets,
-                best_is_max=False)
+            # Parallel computation of each feature's score & return best
+            args = lambda : (selected, self.targets, self.mi)
+            loss = self.loss.choose(first_iter=not selected)
+            scores = self.candidates.feat.parallel_apply(loss, args=args())
+            feat = scores.idxmin()
+            score = scores[feat]
 
             # Arrange stacks
             self.candidates.drop(feat, inplace=True)

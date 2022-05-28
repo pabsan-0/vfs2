@@ -1,6 +1,6 @@
 class mrmr:
     """ Double Input Symmetrical Relevance, Meyer (2006). """
-    name = 'DISR loss'
+    name = 'MRMR loss'
 
     @classmethod
     def choose(cls, first_iter=False):

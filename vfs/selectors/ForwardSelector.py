@@ -18,6 +18,7 @@ class ForwardSelector:
         # Feeding INSTANCE is allowed to avoid rediscretization on repeated runs
         self.loss = loss
         self.mi = mi_fun
+
         # Process-specific attributes, mutable
         self.candidates: DataFrame = self.list_to_frame(self.features)
         self.selected: list[str] = []
@@ -47,11 +48,10 @@ class ForwardSelector:
         # Select as many features as desired
         while len(self.selected) < self.k:
 
+            # Parallel computation of each feature's score & return best
             args = lambda : (self.selected, self.targets, self.mi)
             loss = self.loss.choose(first_iter=not self.selected)
             scores = self.candidates.feat.parallel_apply(loss, args=args())
-
-            # Parallel computation of each feature's score & return best
             feat = scores.idxmax()
             score = scores[feat]
 
