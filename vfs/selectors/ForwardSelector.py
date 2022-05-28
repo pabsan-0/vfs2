@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 from pandarallel import pandarallel
-from ..mi.mi_base import mi_helper
+from ..mi.mi_frame import mi_frame
 
 
 class ForwardSelector:
@@ -16,7 +16,7 @@ class ForwardSelector:
 
         # Heavy inmutable, should be cleaned after computations
         # Feeding INSTANCE is allowed to avoid rediscretization on repeated runs
-        self.loss = loss(mi_fun if mi_fun else mi_helper(df))
+        self.loss = loss(mi_fun if mi_fun else mi_frame(df))
 
         # Process-specific attributes, mutable
         self.candidates: DataFrame = self.list_to_frame(self.features)

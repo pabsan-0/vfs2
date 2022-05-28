@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from vfs.mi.mi_base import mi_helper
+from vfs.mi.mi_frame import mi_frame
 
 
 class Loss(ABC):
@@ -30,7 +30,7 @@ class __example(Loss):
     name = 'Example'
 
     def __init__(self, mi=None):
-        self.mi: mi_helper = mi
+        self.mi: mi_frame = mi
 
     def choose_best(self, candidates, selected, targets, best_is_max=True):
         """ Choose the best feature from candidates to add to the selected set.

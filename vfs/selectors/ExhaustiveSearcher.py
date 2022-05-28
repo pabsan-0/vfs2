@@ -5,7 +5,7 @@ import itertools
 import queue
 from math import comb
 import tqdm
-from ..mi.mi_base import mi_helper
+from ..mi.mi_frame import mi_frame
 
 
 class ExhaustiveSearcher:
@@ -19,7 +19,7 @@ class ExhaustiveSearcher:
 
         # Heavy inmutable, should be cleaned after computations
         # Feeding INSTANCE is allowed to avoid rediscretization on repeated runs
-        self.mi_function = mi_fun if mi_fun else mi_helper(df)
+        self.mi_function = mi_fun if mi_fun else mi_frame(df)
 
         # Process-specific attributes, mutable
         self.selected: list[str] = None
