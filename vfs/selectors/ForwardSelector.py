@@ -1,13 +1,11 @@
 import numpy as np
 import pandas as pd
-from pandarallel import pandarallel
 from ..mi.mi_frame import mi_frame
 
 
 class ForwardSelector:
 
     def __init__(self, df, features, targets, k=3, loss=None, mi_fun=None, memclear=True):
-        pandarallel.initialize(verbose=0)
 
         # Inmutable parameters throughout the whole feature selection
         self.features: list[str] = features
