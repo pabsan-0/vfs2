@@ -1,12 +1,13 @@
 import pandas as pd
 from pandarallel import pandarallel
 
+from context import vfs
 from vfs.mi.mi_frame import mi_frame
 from vfs.selectors import BackwardEliminator, ForwardSelector, ExhaustiveSearcher
 from vfs.losses import *
 
 pandarallel.initialize()
-df = pd.read_csv('data.csv')
+df = pd.read_csv('scripts/_data.csv')
 mifun = mi_frame(df)
 
 
