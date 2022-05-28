@@ -16,8 +16,8 @@ class ForwardSelector:
 
         # Heavy inmutable, should be cleaned after computations
         # Feeding INSTANCE is allowed to avoid rediscretization on repeated runs
-        self.loss = loss(mi_fun if mi_fun else mi_frame(df))
-
+        self.loss = loss
+        self.mi = mi_fun
         # Process-specific attributes, mutable
         self.candidates: DataFrame = self.list_to_frame(self.features)
         self.selected: list[str] = []
@@ -33,7 +33,7 @@ class ForwardSelector:
 
         # Delete prediscretized data within mi func
         if memclear == True:
-            del self.loss.mi
+            del self.loss
             del self.candidates
 
 
@@ -43,10 +43,17 @@ class ForwardSelector:
 
 
     def feature_selection_run(self):
+
         # Select as many features as desired
         while len(self.selected) < self.k:
-            # Inspect all features and choose the best one
-            feat, score = self.loss.choose_best(self.candidates, self.selected, self.targets)
+
+            args = lambda : (self.selected, self.targets, self.mi)
+            loss = self.loss.choose(first_iter=not self.selected)
+            scores = self.candidates.feat.parallel_apply(loss, args=args())
+
+            # Parallel computation of each feature's score & return best
+            feat = scores.idxmax()
+            score = scores[feat]
 
             # Arrange stacks
             self.candidates.drop(feat, inplace=True)
