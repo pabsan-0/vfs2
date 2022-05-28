@@ -4,7 +4,7 @@ from sklearn.feature_selection import mutual_info_classif
 from sklearn.feature_selection import mutual_info_regression
 
 from context import vfs
-from vfs.mi import mi_helper
+from vfs import mi_frame
 
 
 """
@@ -15,7 +15,6 @@ extracted from an arbitrary dataset.
 Notice that sklearn functions are not deterministic, hence their results are
 averaged for a number of runs.
 """
-
 
 
 if __name__ == '__main__':
@@ -32,7 +31,7 @@ if __name__ == '__main__':
     mi_regres = np.array([mutual_info_regression(ff, yy, n_neighbors=5) for __ in range(20)])
 
     # Computing MI using our implementation
-    mi_ours = mi_helper(df)([feature], [target])
+    mi_ours = mi_frame(df)([feature], [target])
 
     # Display, using standard deviation in %
     std  = lambda arr : round((arr.std() / (arr.std()+arr.mean())) * 100)

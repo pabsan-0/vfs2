@@ -8,7 +8,7 @@ import tqdm
 from ..mi.mi_frame import mi_frame
 
 
-def scoring(features, targets, function, my_queue):
+def __scoring(features, targets, function, my_queue):
     """ Computes a the mutual information score of the given feature and target
     sets, then places it in the queue.
     """
@@ -17,7 +17,7 @@ def scoring(features, targets, function, my_queue):
     return None
 
 
-def maxmonitor(my_queue, signal):
+def __maxmonitor(my_queue, signal):
     """ While signal queue is empty, receive elements from my_queue and keep
     only the one which has the highest [1] value. After signal is received,
     end flushing the queue and die.
@@ -71,11 +71,11 @@ def exhaustive_searcher(df, features, targets, k=3, mi_fun=None, pbar=True):
         packed_args = ((list(fc), *constant_args) for fc in feature_combos)
 
         # Supervisor: cleans the score queue of any non-max values in real time
-        supervisor = mp.Process(target=maxmonitor, args=(q_scores, q_signal))
+        supervisor = mp.Process(target=__maxmonitor, args=(q_scores, q_signal))
         supervisor.start()
 
         # Have the pool compute the scores & dump them to supervised queue
-        pool.starmap_async(scoring, progressbar(packed_args))
+        pool.starmap_async(__scoring, progressbar(packed_args))
         pool.close()
         pool.join()
 

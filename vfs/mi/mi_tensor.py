@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import torch
 from .mi_frame import mi_frame
-
+import warnings
 
 
 class mi_tensor(mi_frame):
@@ -15,6 +15,9 @@ class mi_tensor(mi_frame):
         # Boot gpu if arg + allowed
         use_gpu = gpu and torch.cuda.is_available()
         self.device = 'cuda' if use_gpu else 'cpu'
+
+        if gpu and not torch.cuda.is_available():
+            warnings.warn("Attempted MI on GPU, but no device found: using CPU.")
 
 
     def samplebased_mutualinfo(self, feat_x: list, feat_y: list, h_norm=False):
