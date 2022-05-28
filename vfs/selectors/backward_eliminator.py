@@ -30,8 +30,8 @@ def backward_eliminator(df, features, targets, k=3, loss=None, mi_fun=None):
         # Manage selected/discarded/etc
         candidates.drop(feat, inplace=True)
         discarded.append(feat)
+        selected.remove(feat)
         scores.append(score)
-        [selected.remove(ii) for ii in discarded]
 
     # Build summary dataframe with the ranking
     data = np.array([discarded, scores]).T

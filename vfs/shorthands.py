@@ -38,9 +38,11 @@ def NJMIM(df, features, targets, k=3, mi_fun=None):
     return forward_selector(df, features, targets,  k, loss=njmim, mi_fun=mifun)
 
 
-def df_iris():
+def df_iris(rename=True):
     import sklearn.datasets
     df = sklearn.datasets.load_iris(as_frame=True).frame
+    if rename:
+        df.columns = ['F1', 'F2', 'F3', 'F4', 'F5']
     features = df.columns.to_list()[:-1]
     targets = df.columns.to_list()[-1:]
     return df, features, targets

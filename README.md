@@ -27,34 +27,37 @@ This repository provides an efficient implementation for:
 ##### Shorts
 ```
 from vfs import *
-from vfs.shorthands import df_iris
+from vfs.shorthands import df_iris, MRMR
 
 df, features, targets = df_iris()
 
 # Mutual information between two variables
-mi = mi_frame(df)(features[:0], features[-1:])
+mi = mi_frame(df)(['F1'], ['F2'])
 print(mi)
 
 # Mutual information between two groups of variables (vectors)
-mi = mi_frame(df)(features, targets)
+mi = mi_frame(df)(['F1','F2'], ['F3','F4', 'F5'])
 print(mi)
 
-# Select the best three features according to MRMR (forward)
-fs = MRMR(df, features, targets, k=3)
-print(fs)
+# Select the two best features according to MRMR (forward), using shorthand
+summary, __, __ = MRMR(df, ['F1', 'F2', 'F3', 'F4'], ['F5'], k=2)
+print(summary)
 
-# Select the best three features according to JMIM (backward)
-be = BE
-print(be)
+# Select the best two features according to JMIM (backward), using default func
+__, sel, disc = backward_eliminator(df, ['F1', 'F2', 'F3', 'F4'], ['F5'], k=2, loss=jmim, mi_fun=mi_frame(df))
+print(sel)
+print(disc)
 
-# Select the best three features by testing all combinations
-es = ES
-print(es)
+# Select the best three features by testing all feat combinations
+sel, score = exhaustive_searcher(df, ['F1', 'F2', 'F3', 'F4'], ['F5'], k=2, mi_fun=mi_frame(df))
+print(sel)
 
-# Select the best feature group between two candidates
-
+# Select the best feature vector between two candidates
+mifun = mi_frame(df)
+aa = ['F1', 'F2']
+bb = ['F3', 'F4']
+best = aa if mifun(aa, ['F5']) > mifun(bb, ['F5']) else bb
 ```
-
 
 
 ##### Acknowledgments
