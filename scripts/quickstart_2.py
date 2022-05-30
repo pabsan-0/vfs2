@@ -35,8 +35,8 @@ if __name__ == '__main__':
     print('Backward elimnation did not discard these:', sel)
     print('These are the ones it discarded:', disc)
 
-    feats, score = exhaustive_searcher(df, features, targets, k=2, mi_fun=mifun)
+    score, sel, disc = exhaustive_searcher(df, features, targets, k=2, mi_fun=mifun)
     print('\nExhaustive search::')
     print('This is different. This algorithm tested all feature combinations.')
-    print('This is the feature set found optimal:', feats)
+    print('This is the feature set found optimal:', sel)
     print('And this was the score it got:', score)

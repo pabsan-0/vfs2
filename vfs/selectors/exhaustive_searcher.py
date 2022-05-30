@@ -83,5 +83,6 @@ def exhaustive_searcher(df, features, targets, k=3, mi_fun=None, pbar=True):
         q_signal.put('flush')
         supervisor.join()
         selected, scores = q_scores.get()
+        discarded = [features.remove(ii) for ii in selected]
 
-        return selected, scores
+        return scores, selected, discarded

@@ -24,7 +24,7 @@ This repository provides an efficient implementation for:
   - Exhaustive selection based on the raw MI(***X***;***Y***)
 
 
-##### Shorts
+### Shorts
 ```
 from vfs import *
 from vfs.shorthands import df_iris, MRMR
@@ -60,6 +60,23 @@ best = aa if mifun(aa, ['F5']) > mifun(bb, ['F5']) else bb
 ```
 
 
-##### Acknowledgments
 
-This work has been partially developed within the Galicia Sur Health Research Institute (IISGS).
+### Bibliography
+
+
+- <div id="ref-battiti1994" class="csl-entry" role="doc-biblioentry"> Battiti, Roberto. 1994. <span>“Using Mutual Information for Selecting Features in Supervised Neural Net Learning.”</span> <em>IEEE Transactions on Neural Networks</em> 5 (4): 537–50. </div><br/>
+
+- <div id="ref-bennasar2015" class="csl-entry" role="doc-biblioentry"> Bennasar, Mohamed, Yulia Hicks, and Rossitza Setchi. 2015. <span>“Feature Selection Using Joint Mutual Information Maximisation.”</span> <em>Expert Systems with Applications</em> 42 (22): 8520–32. </div> <br/>
+
+- <div id="ref-bommert2020" class="csl-entry" role="doc-biblioentry"> Bommert, Andrea, Xudong Sun, Bernd Bischl, Jörg Rahnenführer, and Michel Lang. 2020. <span>“Benchmark for Filter Methods for Feature Selection in High-Dimensional Classification Data.”</span> <em>Computational Statistics &amp; Data Analysis</em> 143: 106839. </div><br/>
+
+- <div id="ref-fleuret2004" class="csl-entry" role="doc-biblioentry"> Fleuret, François. 2004. <span>“Fast Binary Feature Selection with Conditional Mutual Information.”</span> <em>Journal of Machine Learning Research</em> 5 (9). </div>
+
+
+- <div id="ref-kursa2021" class="csl-entry" role="doc-biblioentry"> Kursa, Miron B. 2021. <span>“Praznik: High Performance Information-Based Feature Selection.”</span> <em>SoftwareX</em> 16: 100819. </div><br/>
+
+- <div id="ref-meyer2006" class="csl-entry" role="doc-biblioentry"> Meyer, Patrick E, and Gianluca Bontempi. 2006. <span>“On the Use of Variable Complementarity for Feature Selection in Cancer Classification.”</span> In <em>Workshops on Applications of Evolutionary Computation</em>, 91–102. Springer. </div><br/>
+
+- <div id="ref-peng2005" class="csl-entry" role="doc-biblioentry"> Peng, Hanchuan, Fuhui Long, and Chris Ding. 2005. <span>“Feature Selection Based on Mutual Information Criteria of Max-Dependency, Max-Relevance, and Min-Redundancy.”</span> <em>IEEE Transactions on Pattern Analysis and Machine Intelligence</em> 27 (8): 1226–38. </div><br/>
+
+- <div id="ref-yang1999" class="csl-entry" role="doc-biblioentry">Yang, H, and John Moody. 1999. <span>“Feature Selection Based on Joint Mutual Information.”</span> In <em>Proceedings of International ICSC Symposium on Advances in Intelligent Data Analysis</em>, 1999:22–25. Citeseer. </div><br/>
