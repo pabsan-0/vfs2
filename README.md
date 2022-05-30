@@ -28,9 +28,10 @@ This repository provides an efficient implementation for:
 ```
 from vfs import *
 from vfs.shorthands import df_iris, MRMR
-
 df, features, targets = df_iris()
-
+```
+##### Mutual information
+```
 # Mutual information between two variables
 mi = mi_frame(df)(['F1'], ['F2'])
 print(mi)
@@ -38,7 +39,11 @@ print(mi)
 # Mutual information between two groups of variables (vectors)
 mi = mi_frame(df)(['F1','F2'], ['F3','F4', 'F5'])
 print(mi)
+```
 
+
+##### Traditional feature selection
+```
 # Select the two best features according to MRMR (forward), using shorthand
 summary, __, __ = MRMR(df, ['F1', 'F2', 'F3', 'F4'], ['F5'], k=2)
 print(summary)
@@ -47,7 +52,10 @@ print(summary)
 __, sel, disc = backward_eliminator(df, ['F1', 'F2', 'F3', 'F4'], ['F5'], k=2, loss=jmim, mi_fun=mi_frame(df))
 print(sel)
 print(disc)
+```
 
+##### Vectorial feature selection
+```
 # Select the best three features by testing all feat combinations
 sel, score = exhaustive_searcher(df, ['F1', 'F2', 'F3', 'F4'], ['F5'], k=2, mi_fun=mi_frame(df))
 print(sel)
