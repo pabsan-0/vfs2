@@ -19,24 +19,28 @@ if __name__ == '__main__':
     print("It will make repeated MIs faster by prebinning our features. ")
     print(mifun)
 
-
-
-    summ, sel, disc = forward_selector(df, features, targets,  k=3, loss=jmim, mi_fun=mifun)
+    summ, sel_f, disc = forward_selector(df, features, targets,  k=3, loss=jmim, mi_fun=mifun)
     print('\nForward Selection:')
     print('A summary of the selection ranking:')
     print(summ)
-    print('Forward selection chose these features:', sel)
+    print('Forward selection chose these features:', sel_f)
     print('but it did not choose these:', disc)
 
-    summ, sel, disc = backward_eliminator(df, features, targets,  k=3, loss=jmim, mi_fun=mifun)
+    summ, sel_b, disc = backward_eliminator(df, features, targets,  k=3, loss=jmim, mi_fun=mifun)
     print('\nBackward elimnation:')
     print('A summary of the discarding ranking:')
     print(summ)
-    print('Backward elimnation did not discard these:', sel)
+    print('Backward elimnation did not discard these:', sel_b)
     print('These are the ones it discarded:', disc)
 
-    score, sel, disc = exhaustive_searcher(df, features, targets, k=2, mi_fun=mifun)
+    score, sel_e, disc = exhaustive_searcher(df, features, targets, k=3, mi_fun=mifun)
     print('\nExhaustive search::')
     print('This is different. This algorithm tested all feature combinations.')
-    print('This is the feature set found optimal:', sel)
+    print('This is the feature set found optimal:', sel_e)
     print('And this was the score it got:', score)
+
+
+    print('\nLets compare the joint MI score of the selected features for all of the above: ')
+    print(f'Forward selected:    {sel_f}, with joint MI = {mifun(sel_f, targets)}')
+    print(f'Backward selected:   {sel_b}, with joint MI = {mifun(sel_b, targets)}')
+    print(f'Exhaustive selected: {sel_e}, with joint MI = {mifun(sel_e, targets)}')

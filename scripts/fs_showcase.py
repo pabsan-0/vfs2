@@ -8,7 +8,7 @@ This script is meant to provide a quick overview on how to use this library by
 running most implemented feature selection methods.
 """
 
-if __name == '__main__':
+if __name__ == '__main__':
 
     # Load dataframe and prebin it
     df, features, targets = df_iris()
@@ -17,13 +17,17 @@ if __name == '__main__':
     # Run all Forward selections
     for loss in [mim, disr, jmi, jmim, mrmr, njmim]:
         a =  forward_selector(df, features, targets,  k=3, loss=loss, mi_fun=mifun)
-        print('Forward ' + loss.name, a[])
+        print('Forward ' + loss.name)
+        print(a[0])
+        print(a[1:], end='\n\n')
 
     # Run all Backward selections
     for loss in [mim, disr, jmi, jmim, mrmr, njmim]:
         a =  backward_eliminator(df, features, targets,  k=3, loss=loss, mi_fun=mifun)
-        print('Backward ' + loss.name, a)
+        print('Backward ' + loss.name)
+        print(a[0])
+        print(a[1:], end='\n\n')
 
     # Run Exhaustive search
-    es = exhaustive_searcher(df, features, targets, k=2, mi_fun=mifun)
+    es = exhaustive_searcher(df, features, targets, k=3, mi_fun=mifun)
     print("Exhaustive\n", es)
