@@ -2,9 +2,19 @@
 
 The scripts in this directory are supposed to serve as a little introduction to the library, as well as to showcase its main contributions.
 
+### Contents
+- [Mutual information](#mutual-information)
+  - [mi_baseline.py](#page_facing_up-mi_baselinepy): comparing our MI against scikit's 
+  - [mi_prebinning.py](#page_facing_up-mi_prebinningpy): prebinning data to save time when computing MI
+  - [mi_gpu.py](#page_facing_up-mi_gpupy): time benchmarking CPU vs GPU
+  - [mi_onehot.py](#page_facing_up-mi_onehotpy): how to use onehot-encoded data
+- [Feature selection](#feature-selection)
+  - [fs_showcase.py](#page_facing_up-fs_showcasepy): how to call all feature selection methods
+  - [fs_verbose.py](#page_facing_up-fs_verbosepy): insights on feture selection python objects and return values
+  - [fs_vectorial.py](#page_facing_up-fs_vectorialpy): demo on adapted literature methods to use true joint MI 
 
-## Mutual information
-
+### Mutual information
+---
 #### [:page_facing_up: mi_baseline.py](mi_baseline.py)
 
 - This script compares our MI implementation with sklearn's as a sanity check.
@@ -12,6 +22,8 @@ The scripts in this directory are supposed to serve as a little introduction to 
 - If fed a multivariate `XX`:
   - Scikit will return the tuple `[I(i; Y) for i in XX]` .
   - Our implementation will return the single value `I(XX; Y) = I([i for i in XX]; Y)` .
+
+<p><details><summary> See output </summary>
 
 ```
 $ python3 mi_baseline.py
@@ -21,6 +33,9 @@ Scikit regression: 0.506  (stddev=2%)
 Our MI:            0.502   
 ```
 
+</details></p>
+
+---
 #### [:page_facing_up: mi_prebinning.py](mi_prebinning.py)
   - Prebinning the data initially can greatly speed up multiple successive MI computations later. This is:
     - We first discretize the whole dataset `df` into an object we call `mifun`.
@@ -28,6 +43,9 @@ Our MI:            0.502
     - This massively boosts speed of feature selection algorithms, which repeteadly compute MI combinations.
   - The script will compute MI five times in a row with both our pytorch and pandas implementations, both with and without prebinning.
   - It will print out a time benchmarking of these four scenarios.
+
+<details><summary> See output </summary>
+<p>
 
 ```
 $ python3 mi_prebinning.py
@@ -48,16 +66,24 @@ TENSOR: W/ prebinning...
 	Time: 0.051 seconds
 ```
 
+</p>
+</details>  
+
+---
 #### [:page_facing_up: mi_gpu.py](mi_gpu.py)
   - This script runs our pytorch implementation both on GPU and CPU, and both with and without prebinning.
   - It will print out a time benchmarking of these four scenarios.
 
+---
 #### [:page_facing_up: mi_onehot.py](mi_onehot.py)
   - This example shows how to compute mutual information with with one-hot encoded variables.
   - For equally-discretized data, it shows that `I(X;Y) == I(onehot(X); Y)`
 
+<details><summary> See output </summary>
+<p>
+
 ```
-pablo@ubuntu:~/workspace/vfs_redo/scripts$ python3 mi_onehot.py
+$ python3 mi_onehot.py
 One hot encoded MI matches categorical representation, as expected:
 Categorical frame:	 1.089
 Categorical tensor:	 1.089
@@ -65,15 +91,21 @@ One-hot frame:	 1.089
 One-hot tensor:	 1.089
 ```
 
-## Feature selection
-These scripts showcase basic feature selection commands.
+</p>
+</details>
 
+
+### Feature selection
+---
 #### [:page_facing_up: fs_showcase.py](fs_showcase.py):
   - Spawns some example data from the iris dataset.
   - Create an efficient function to compute faster mutual informations for these data (see example mi_prebinning.py).
   - All MI-based FS literature methods are used to select the 3 best features according to the forward and backward selection paradigms.
   - The true joint MI of all combinations of features is used to, again, take the best 3.
 
+<details><summary> See output </summary>
+<p>
+	
 ```
 $ python3 fs_showcase.py
 Forward MIM loss
@@ -153,10 +185,18 @@ Exhaustive
  (1.073, ['F2', 'F3', 'F4'], [None, None, None])
 
 ```
+													   
+</p>
+</details>
 
+
+---
 #### [:page_facing_up: fs_verbose.py](fs_verbose.py):
   - This script focuses on giving you a deeper overview on the python objects taken and returned from the functions in the previous example.  
   - Basically, it runs a single feature selection run of each type: forward, backward and exhaustive.
+
+<details><summary> See output </summary>
+<p>
 
 ```
 $ python3 fs_verbose.py
@@ -191,8 +231,11 @@ Forward selected:    ['F4', 'F1', 'F3'], with joint MI = 1.067
 Backward selected:   ['F1', 'F3', 'F4'], with joint MI = 1.067
 Exhaustive selected: ['F2', 'F3', 'F4'], with joint MI = 1.073
 ```
+													   
+</p>
+</details>
 
-
+---
 #### [:page_facing_up: fs_vectorial.py](fs_vectorial.py)
   - This script holds true joint mutual information adaptions for the literature methods MRMR and DISR.
   - Originally, these estimated multivariate MIs by averaging many bi/trivariate ones.
@@ -200,11 +243,3 @@ Exhaustive selected: ['F2', 'F3', 'F4'], with joint MI = 1.073
 
 
 
-
-
-
-<details open><summary> mi_baseline.py </summary>
-<p>
-</p>
-</details>  
-pypraznik.py
