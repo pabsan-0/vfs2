@@ -22,6 +22,8 @@ This repository provides implementations for:
   - Forward selection methods in the literature
   - Backward elimination from the methods in the literature
   - Exhaustive selection based on the raw MI(***X***;***Y***)
+  - Vectorized versions of MRMR and DISR methods by replacing f(MI(X*i*;Y)) -> MI(***X***;***Y***)
+
 
 :boom: See next section [Shorts](#shorts) for a super brief tutorial on how to use the library.  
 
