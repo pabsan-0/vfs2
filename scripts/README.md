@@ -71,8 +71,28 @@ The scripts in this directory are supposed to serve as a little introduction to 
 #### [:page_facing_up: mi_gpu.py](mi_gpu.py)
 >  - This script runs our pytorch implementation both on GPU and CPU, and both with and without prebinning.
 >  - It will print out a time benchmarking of these four scenarios.
-><details><summary> No output available </summary><p></p></details>
-	
+><details><summary> See output </summary><p>
+>
+>```
+>python3 mi_gpu.py
+>TENSOR CPU: No prebinning...
+>	1.089; 1.089; 1.089; 1.089; 1.089; 1.089; 1.089; 1.089; 1.089; 1.089; 1.089; 1.089; 1.089; 1.089; 1.089; >1.089; 1.089; 1.089; 1.089; 1.089; 
+>	Time: 0.157 seconds
+>
+>TENSOR CPU: W/ prebinning...
+>	1.089; 1.089; 1.089; 1.089; 1.089; 1.089; 1.089; 1.089; 1.089; 1.089; 1.089; 1.089; 1.089; 1.089; 1.089; >1.089; 1.089; 1.089; 1.089; 1.089; 
+>	Time: 0.072 seconds
+>
+>TENSOR GPU: No prebinning...
+>	1.089; 1.089; 1.089; 1.089; 1.089; 1.089; 1.089; 1.089; 1.089; 1.089; 1.089; 1.089; 1.089; 1.089; 1.089; >1.089; 1.089; 1.089; 1.089; 1.089; 
+>	Time: 0.311 seconds
+>
+>TENSOR GPU: W/ prebinning...
+>	1.089; 1.089; 1.089; 1.089; 1.089; 1.089; 1.089; 1.089; 1.089; 1.089; 1.089; 1.089; 1.089; 1.089; 1.089; >1.089; 1.089; 1.089; 1.089; 1.089; 
+>	Time: 0.041 seconds
+>```
+>
+></p></details>	
 
 #### [:page_facing_up: mi_onehot.py](mi_onehot.py)
 >  - This example shows how to compute mutual information with with one-hot encoded variables.
