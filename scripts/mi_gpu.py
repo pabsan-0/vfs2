@@ -28,6 +28,7 @@ if __name__ == '__main__':
 
     # Sometimes GPUs are slow on first contact
     # Lets instance a tensor to have that downtime outside the timed runs
+    import torch
     torch.Tensor([1]).to('cuda')
     
     with TimerStdout():
