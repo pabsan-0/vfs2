@@ -26,6 +26,10 @@ if __name__ == '__main__':
 
     df, features, targets = df_iris()
 
+    # Sometimes GPUs are slow on first contact
+    # Lets instance a tensor to have that downtime outside the timed runs
+    torch.Tensor([1]).to('cuda')
+    
     with TimerStdout():
         print("\nTENSOR CPU: No prebinning...\n\t", end='')
         for __ in range(20):
